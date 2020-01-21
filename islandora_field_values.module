@@ -14,10 +14,22 @@ function islandora_field_values_menu() {
     'description' => "Query Islandora's Solr index to get a list of all the unique values in a field.",
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_field_values_query_form'),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('get unique solr field values'),
     'type' => MENU_CALLBACK,
   );
   return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function islandora_field_values_permission() {
+  return array(
+    'get unique solr field values' => array(
+      'title' => t('Get unique Solr field values'),
+      'description' => t('Generate a list of unique values in a selected Solr field.'),
+    ),
+  );
 }
 
 function islandora_field_values_query_form() {

@@ -17,7 +17,7 @@ Islandora 7.x utility module that shows the unique values in the selected Solr f
 
 ## Configuration
 
-None.
+None, other than to assign users the required "Get unique Solr field values" permission.
 
 ## Dependencies
 
