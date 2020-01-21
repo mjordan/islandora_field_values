@@ -4,7 +4,7 @@
 
 Islandora 7.x utility module that shows the unique values in the selected Solr field. To use it:
 
-1. Go to `get_field_values`
+1. Go to `islandora/get_field_values`
 1. Enter part of the Solr field name in the form field. If you don't know which version of the field to choose, you can't go wrong with the version ending in "_ms":
    ![The menu](docs/images/mods_fields.png)
 1. Click on the "Submit" button to see the unique values in the selected field, along with an occurance count:
