@@ -1,0 +1,7 @@
+name = "Islandora Get Field Values"
+description = "Islandora module that lets users see all the unique values for a given field."
+version = 7.x-dev
+core = 7.x
+package = Islandora Tools
+dependencies[] = islandora
+dependencies[] = islandora_solr

@@ -1,0 +1,89 @@
+<?php
+
+/**
+ * @file
+ * The main module file.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function islandora_field_values_menu() {
+  $items['islandora/get_field_values'] = array(
+    'title' => 'Get Islandora Solr Field Values',
+    'description' => "Query Islandora's Solr index to get a list of all the unique values in a field.",
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_field_values_query_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function islandora_field_values_query_form() {
+  $form = array();
+  $form['islandora_field_values_solr_field'] = array(
+    '#type' => 'textfield',
+    '#description' => t('A field from within Solr. Fields that end in "_ms" show the raw field value and include multivalued values.'),
+    '#size' => 105,
+    '#autocomplete_path' => 'islandora_solr/autocomplete_luke',
+    '#default_value' => '',
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit')
+  );
+  $form['options']['reset'] = array(
+    '#type' => 'submit',
+    '#value' => t('Reset'),
+    '#submit' => array('islandora_field_values_reset'),
+  );
+
+  if (isset($_SESSION['islandora_field_values'], $_SESSION['islandora_field_values']['results'])) {
+    $values = array();
+    foreach ($_SESSION['islandora_field_values']['results'] as $value => $count) {
+      $values[] = $value . ' (' . $count . ' occurrances)';
+    }
+    $list_variables = array(
+        'items' => $values,
+        'title' => t('Unique values in the %fieldname Solr field:', array('%fieldname' => $_SESSION['islandora_field_values']['field'])),
+        'type' => 'ul',
+        'attributes' => array(),
+    );
+    if (count($_SESSION['islandora_field_values']['results']) > 0) {
+      $results = theme_item_list($list_variables);
+    }
+    else {
+      $results = t("Sorry, that field does not have any values.");
+    }
+    $form['results'] = array(
+      '#markup' => $results,
+      '#prefix' => '<div>',
+      '#suffix' => '</div>',
+    );
+  }
+
+  unset($_SESSION['islandora_field_values']);
+  return $form;
+}
+
+function islandora_field_values_query_form_submit($form, &$form_state) {
+  $fieldname = $form_state['values']['islandora_field_values_solr_field'];
+  $query_processor = new IslandoraSolrQueryProcessor();
+  $query_processor->solrParams['facet'] = 'true';
+  $query_processor->solrParams['facet.mincount'] = '0';
+  $query_processor->solrParams['facet.limit'] = '1000000';
+  $query_processor->solrParams['facet.field'] = $fieldname;
+  $query_processor->solrLimit = '0';
+  $query = '*:*';
+  $query_processor->solrQuery = $query;
+  $query_processor->executeQuery(FALSE);
+  if ($query_processor->islandoraSolrResult['response']['numFound'] > 0) {
+    $_SESSION['islandora_field_values']['results'] = $query_processor->islandoraSolrResult['facet_counts']['facet_fields'][$fieldname];
+    $_SESSION['islandora_field_values']['field'] = $fieldname;
+  }
+}
+
+function islandora_field_values_reset($form, &$form_state) {
+  $form_state['rebuild'] = FALSE;
+}
