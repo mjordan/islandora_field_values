@@ -54,12 +54,12 @@ function islandora_field_values_query_form() {
   if (isset($_SESSION['islandora_field_values'], $_SESSION['islandora_field_values']['results'])) {
     $values = array();
     foreach ($_SESSION['islandora_field_values']['results'] as $value => $count) {
-      $values[] = $value . ' (' . $count . ' occurrances)';
+      $values[] = $value . ' (' . $count . ')';
     }
     $num_values = count($values);
     $list_variables = array(
         'items' => $values,
-        'title' => t('@count unique values in the %fieldname Solr field:', array('@count' => $num_values, '%fieldname' => $_SESSION['islandora_field_values']['field'])),
+        'title' => t('@count unique values in the %fieldname Solr field, with occurance counts:', array('@count' => $num_values, '%fieldname' => $_SESSION['islandora_field_values']['field'])),
         'type' => 'ul',
         'attributes' => array(),
     );
