@@ -52,14 +52,19 @@ function islandora_field_values_query_form() {
   );
 
   if (isset($_SESSION['islandora_field_values'], $_SESSION['islandora_field_values']['results'])) {
+    $fieldname = $_SESSION['islandora_field_values']['field'];
+    module_load_include('inc', 'islandora_solr', 'includes/utilities');
     $values = array();
     foreach ($_SESSION['islandora_field_values']['results'] as $value => $count) {
-      $values[] = $value . ' (' . $count . ')';
+      $facet_escaped_value = islandora_solr_facet_query_escape($value);
+      $query = 'islandora/search/' . $fieldname . urlencode(':("' . $facet_escaped_value . '")');
+      $link = l($value, $query, array('html' => TRUE));
+      $values[] = $link . ' (' . $count . ')';
     }
     $num_values = count($values);
     $list_variables = array(
         'items' => $values,
-        'title' => t('@count unique values in the %fieldname Solr field, with occurance counts:', array('@count' => $num_values, '%fieldname' => $_SESSION['islandora_field_values']['field'])),
+        'title' => t('@count unique values in the %fieldname Solr field, with occurance counts:', array('@count' => $num_values, '%fieldname' => $fieldname)),
         'type' => 'ul',
         'attributes' => array(),
     );
