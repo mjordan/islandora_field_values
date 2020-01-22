@@ -1,8 +1,10 @@
 # Islandora Field Values
 
-## Overview
+Islandora 7.x utility module that shows the unique values in the selected Solr field.
 
-Islandora 7.x utility module that shows the unique values in the selected Solr field. To use it:
+## Usage
+
+To use it:
 
 1. Go to `islandora/get_field_values`
 1. Enter part of the Solr field name in the form field. If you don't know which version of the field to choose, you can't go wrong with the version ending in "_ms":
@@ -15,9 +17,9 @@ Islandora 7.x utility module that shows the unique values in the selected Solr f
 
 This module also comes with a Drush command. Here's an example:
 
-`drush islandora-field-values-get --fieldname=mods_abstract_ms --remove_line_breaks --output_file=/tmp/output.txt`.
+`drush islandora-field-values-get --fieldname=mods_abstract_ms --output_file=/tmp/output.txt`.
 
-The output looks like this:
+The output is a tab-delimited file (first column in field values, second column is occurance count):
 
 ```
 Unique values for Solr field mods_abstract_ms (24 unique values)
@@ -30,7 +32,7 @@ A street in Barkerville, B.C. Some storefronts and automobiles are shown.       
 A street in Qualicum Beach, B.C. Some storefronts and automobiles are shown.    1
 ```
 
-The `--remove_line_breaks` option` removes line breaks so field values fit nicely on a single rown in the output.
+Add `--remove_line_breaks` if you want to remove line breaks from field values so they fit nicely on a single rown in the output.
 
 
 ## Installation
