@@ -58,7 +58,7 @@ function islandora_field_values_query_form() {
     foreach ($_SESSION['islandora_field_values']['results'] as $value => $count) {
       $facet_escaped_value = islandora_solr_facet_query_escape($value);
       $query = 'islandora/search/' . $fieldname . urlencode(':("' . $facet_escaped_value . '")');
-      $link = l($value, $query, array('html' => TRUE));
+      $link = l(strip_tags($value), $query, array('html' => TRUE));
       $values[] = $link . ' (' . $count . ')';
     }
     $num_values = count($values);
