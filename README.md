@@ -17,19 +17,32 @@ To use it:
 
 This module also comes with a Drush command. Here's an example:
 
-`drush islandora-field-values-get --fieldname=mods_abstract_ms --output_file=/tmp/output.txt`.
+`drush islandora-field-values-get --fieldname=mods_abstract_ms --output_file=/tmp/output.txt`
 
 The output is a tab-delimited file (first column in field values, second column is occurance count):
 
 ```
-Unique values for Solr field mods_abstract_ms (24 unique values)
+Unique values for Solr field mods_genre_ms (210 unique values)
 
-An aerial view of a wharf at Manson's Landing, B.C. A few sea planes are shown parked by the wharf.     2
-The Ruskin Power Plant near Mission City, B.C. A bridge is shown leading to the power plant.    2
-A Bill Bose ox team in front of the Clinton Hotel on its way to Barkerville, B.C.       1
-A dog sled team in Atlin, B.C.  1
-A street in Barkerville, B.C. Some storefronts and automobiles are shown.       1
-A street in Qualicum Beach, B.C. Some storefronts and automobiles are shown.    1
+Postcards       34940
+Text    12940
+Editorial cartoons      11341
+Photographs     6049
+photographs     5992
+Image   5798
+Painting & Drawing      1733
+%value  1176
+Records (Documents)     1139
+Architecture: built works       1032
+Architecture    1019
+Interviews (Sound recordings)   836
+Oral histories  747
+text    616
+Painting: paintings     583
+Letter/Memo     567
+Sculpture: sculpture (visual work)      546
+Photography: photographs        510
+Sculpture       497
 ```
 
 Add `--remove_line_breaks` if you want to remove line breaks from field values so they fit nicely on a single rown in the output.
