@@ -12,6 +12,8 @@ To use it:
 1. Click on the "Submit" button to see the unique values in the selected field, along with an occurance count:
    ![The button](docs/images/values.png)
 
+Clicking on the link will perform a search for all the objects with that value.
+
 Note that the text that appears in results is not necessarily identical to the value of the field; values that contain HTML tags have the tags stripped so they do not interfere with rendering the results list.
 
 ## Drush command
